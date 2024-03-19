@@ -1,6 +1,20 @@
 from django.contrib import admin
+from django.contrib.admin.widgets import AdminFileWidget
+from django.db import models
+from django.utils.safestring import mark_safe
+
 from .models import Brand, Car
 
-# Register your models here.
-admin.site.register(Brand)
-admin.site.register(Car)
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    fields = ["name", "image_preview", "image"]
+    list_display = ["name", "image_preview"]
+    readonly_fields = ["image_preview"]
+
+
+@admin.register(Car)
+class CarAdmin(admin.ModelAdmin):
+
+    list_display = ["name", "image_preview"]
+    readonly_fields = ["image_preview"]
