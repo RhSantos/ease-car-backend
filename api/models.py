@@ -1,14 +1,12 @@
 from django.db import models
 
-
 class Brand(models.Model):
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="brand_images/")
-
+    image = models.ImageField(upload_to='brand_images/')
 
 class Car(models.Model):
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="car_images/")
+    image = models.ImageField(upload_to='car_images/')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     passengers = models.IntegerField()
     doors = models.IntegerField()
