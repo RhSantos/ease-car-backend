@@ -42,6 +42,7 @@ class Car(models.Model):
     horsepower = models.IntegerField()
     top_speed = models.IntegerField()
     acceleration_0_100 = models.DecimalField(max_digits=4, decimal_places=2)
+    model_year = models.IntegerField()
 
     def __str__(self):
         return self.name + f"({self.brand.name})"
