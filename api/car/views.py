@@ -38,8 +38,13 @@ class CarViewSet(viewsets.ModelViewSet):
                 {"error": "Car not found"}, status=status.HTTP_404_NOT_FOUND
             )
 
-        serializer = CarSerializer(car, data=request.data, partial=True)
+        serializer = CarSerializer(car, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, pk=None):
+        car = self.get_object()
+        car.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
