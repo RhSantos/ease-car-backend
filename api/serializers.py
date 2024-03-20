@@ -8,6 +8,7 @@ class BrandSerializer(serializers.ModelSerializer):
         model = Brand
         fields = ["id", "name", "image"]
 
+
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = Car
@@ -15,6 +16,7 @@ class CarSerializer(serializers.ModelSerializer):
             "id",
             "name",
             "image",
+            "model_year",
             "brand",
             "passengers",
             "doors",
