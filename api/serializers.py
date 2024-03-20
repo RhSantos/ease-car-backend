@@ -14,6 +14,7 @@ class CarSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "name",
+            "image",
             "brand",
             "passengers",
             "doors",
@@ -21,7 +22,7 @@ class CarSerializer(serializers.ModelSerializer):
             "has_power_locks",
             "has_power_windows",
             "fuel_type",
-            "is_manual",
+            "is_automatic",
             "horsepower",
             "top_speed",
             "acceleration_0_100",
