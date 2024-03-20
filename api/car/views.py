@@ -21,3 +21,12 @@ def get_car(request, car_id):
         return Response(serializer.data)
     except Car.DoesNotExist:
         return Response({"error": "Car not found"}, status=404)
+
+
+@api_view(["POST"])
+def create_car(request):
+    serializer = CarSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
