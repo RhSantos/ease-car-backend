@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Address, Brand, Car
+from .models import Address, Brand, Car, Rental
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -43,4 +43,16 @@ class AddressSerializer(serializers.ModelSerializer):
             "postal_code",
             "country",
             "complement",
+        ]
+
+
+class RentalSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Rental
+        fields = [
+            "id",
+            "renter",
+            "car",
+            "created_at",
+            "updated_at",
         ]
