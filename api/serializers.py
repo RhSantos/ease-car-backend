@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Address, Brand, Car, Rental
+from .models import Address, Brand, Car, Rental, Review
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -53,6 +53,19 @@ class RentalSerializer(serializers.ModelSerializer):
             "id",
             "renter",
             "car",
+            "created_at",
+            "updated_at",
+        ]
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = [
+            "id",
+            "reviewer",
+            "rental",
+            "stars",
+            "comment",
             "created_at",
             "updated_at",
         ]
