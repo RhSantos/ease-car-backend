@@ -72,7 +72,7 @@ class Rental(models.Model):
 
     renter = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -89,7 +89,7 @@ class Review(models.Model):
     rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
     stars = models.DecimalField(max_length=2, decimal_places=1, max_digits=2)
     comment = models.CharField(max_length=50)
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
