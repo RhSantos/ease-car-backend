@@ -6,6 +6,7 @@ from .routes.brand.views import BrandViewSet
 from .routes.car.views import CarViewSet
 from .routes.rental.views import RentalViewSet
 from .routes.review.views import ReviewViewSet
+from .routes.favorite.views import FavoriteViewSet
 
 router = DefaultRouter()
 router.register("car", CarViewSet)
@@ -13,6 +14,7 @@ router.register("brand", BrandViewSet)
 router.register("address", AddressViewSet)
 router.register("rental", RentalViewSet)
 router.register("review", ReviewViewSet)
+router.register("favorite", FavoriteViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
