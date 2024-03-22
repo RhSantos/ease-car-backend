@@ -1,3 +1,6 @@
+import hashlib
+import uuid
+
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
@@ -72,7 +75,7 @@ class Rental(models.Model):
 
     renter = models.ForeignKey(User, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -89,7 +92,7 @@ class Review(models.Model):
     rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
     stars = models.DecimalField(max_length=2, decimal_places=1, max_digits=2)
     comment = models.CharField(max_length=50)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
@@ -104,7 +107,7 @@ class Favorite(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
@@ -113,3 +116,41 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"{self.user} [{self.rental}]"
+
+
+class Payment(models.Model):
+    PAYMENT_TYPES = (
+        ("creditCard", "Credit Card"),
+        ("debitCard", "Debit Card"),
+        ("cash", "Cash"),
+    )
+
+    PAYMENT_STATUS = (
+        ("pending", "Pending"),
+        ("completed", "Completed"),
+        ("cancelled", "Cancelled"),
+        ("failed", "Failed"),
+    )
+
+    payment_type = models.CharField(
+        max_length=20, choices=PAYMENT_TYPES, default="creditCard"
+    )
+    payment_hash = models.CharField(max_length=100, editable=False)
+    payment_status = models.CharField(
+        max_length=20, choices=PAYMENT_STATUS, default="pending"
+    )
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Payment HASH: {self.payment_hash}"
+
+    def save(self, *args, **kwargs):
+
+        if not self.payment_hash:
+            self.payment_hash = hashlib.sha256(uuid.uuid4().bytes).hexdigest()
+
+        self.updated_at = timezone.now()
+        super(Payment, self).save(*args, **kwargs)
