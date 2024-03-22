@@ -19,6 +19,7 @@ class Migration(migrations.Migration):
                 ('payment_hash', models.CharField(editable=False, max_length=100)),
                 ('payment_status', models.CharField(choices=[('pending', 'Pending'), ('completed', 'Completed'), ('cancelled', 'Cancelled'), ('failed', 'Failed')], default='pending', max_length=20)),
                 ('amount', models.DecimalField(decimal_places=2, max_digits=10)),
+                ('bill_date', models.DateTimeField()),
                 ('description', models.TextField(blank=True)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now, editable=False)),
                 ('updated_at', models.DateTimeField(auto_now=True, editable=False)),
