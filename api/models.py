@@ -140,6 +140,7 @@ class Payment(models.Model):
     )
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(blank=True)
+    bill_date = models.DateTimeField()
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
