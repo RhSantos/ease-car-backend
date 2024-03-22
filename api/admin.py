@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Address, Brand, Car, Favorite, Rental, Review
+from .models import Address, Brand, Car, Favorite, Payment, Rental, Review
 
 
 @admin.register(Brand)
@@ -48,6 +48,15 @@ class ReviewAdmin(admin.ModelAdmin):
 class FavoriteAdmin(admin.ModelAdmin):
     all_fields = [f.name for f in Favorite._meta.fields]
     parent_fields = Favorite.get_deferred_fields(Favorite)
+
+    list_display = all_fields
+    read_only = parent_fields
+
+
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    all_fields = [f.name for f in Payment._meta.fields]
+    parent_fields = Payment.get_deferred_fields(Payment)
 
     list_display = all_fields
     read_only = parent_fields
