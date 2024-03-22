@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Address, Brand, Car, Favorite, Rental, Review
+from .models import Address, Brand, Car, Favorite, Payment, Rental, Review
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -79,6 +79,21 @@ class FavoriteSerializer(serializers.ModelSerializer):
             "id",
             "user",
             "rental",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = [
+            "id",
+            "payment_type",
+            "payment_hash",
+            "payment_status",
+            "amount",
+            "description",
             "created_at",
             "updated_at",
         ]
