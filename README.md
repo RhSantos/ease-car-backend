@@ -4,8 +4,93 @@
 EaseCar App Backend using **Python Django 5.0.3**
 
 ## 🌐 API Routes
-undefined
-
+```bash
+.
+└── Base Server URL ex: 
+http://127.0.0.1/
+    └── api/
+        ├── brand/
+        │   ├── -------------------
+        │   ├── GET: List all Brands
+        │   └── -------------------
+        ├── car/
+        │   ├── --------------------
+        │   ├── GET: List all Cars
+        │   ├── POST: Create new Car
+        │   ├── --------------------
+        │   └── {id}/
+        │       ├── -------------------------
+        │       ├── GET: Retrieve single Car
+        │       ├── PUT: Update single Car
+        │       ├── DELETE: Remove single Car
+        │       └── -------------------------
+        ├── address/
+        │   ├── --------------------
+        │   ├── GET: List all Adresses
+        │   ├── POST: Create new Address
+        │   ├── --------------------
+        │   └── {id}/
+        │       ├── -------------------------
+        │       ├── GET: Retrieve single Address
+        │       ├── PUT: Update single Address
+        │       ├── DELETE: Remove single Address
+        │       └── -------------------------
+        ├── rental/
+        │   ├── --------------------
+        │   ├── GET: List all Rentals
+        │   ├── POST: Create new Rental
+        │   ├── --------------------
+        │   └── {id}/
+        │       ├── -------------------------
+        │       ├── GET: Retrieve single Rental
+        │       ├── PUT: Update single Rental
+        │       ├── DELETE: Remove single Rental
+        │       └── -------------------------
+        ├── review/
+        │   ├── --------------------
+        │   ├── GET: List all Reviews
+        │   ├── POST: Create new Review
+        │   ├── --------------------
+        │   └── {id}/
+        │       ├── -------------------------
+        │       ├── GET: Retrieve single Review
+        │       ├── PUT: Update single Review
+        │       ├── DELETE: Remove single Review
+        │       └── -------------------------
+        ├── favorite/
+        │   ├── --------------------
+        │   ├── GET: List all Favorites
+        │   ├── POST: Create new Favorite
+        │   ├── --------------------
+        │   └── {id}/
+        │       ├── -------------------------
+        │       ├── GET: Retrieve single Favorite
+        │       ├── PUT: Update single Favorite
+        │       ├── DELETE: Remove single Favorite
+        │       └── -------------------------
+        ├── payment/
+        │   ├── --------------------
+        │   ├── GET: List all Payments
+        │   ├── POST: Create new Payment
+        │   ├── --------------------
+        │   └── {id}/
+        │       ├── -------------------------
+        │       ├── GET: Retrieve single Payment
+        │       ├── PUT: Update single Payment
+        │       ├── DELETE: Remove single Payment
+        │       └── -------------------------
+        └── booking/
+            ├── --------------------
+            ├── GET: List all Bookings
+            ├── POST: Create new Booking
+            ├── --------------------
+            └── {id}/
+                ├── -------------------------
+                ├── GET: Retrieve single Booking
+                ├── PUT: Update single Booking
+                ├── DELETE: Remove single Booking
+                └── -------------------------
+```
 ## 🗃️ Database Architecture
 undefined
 
