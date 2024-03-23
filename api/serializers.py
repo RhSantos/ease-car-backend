@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Address, Brand, Car, Favorite, Payment, Rental, Review
+from .models import Address, Booking, Brand, Car, Favorite, Payment, Rental, Review
 
 
 class BrandSerializer(serializers.ModelSerializer):
@@ -94,6 +94,22 @@ class PaymentSerializer(serializers.ModelSerializer):
             "payment_status",
             "amount",
             "description",
+            "created_at",
+            "updated_at",
+        ]
+
+
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Booking
+        fields = [
+            "id",
+            "renter",
+            "rental",
+            "location",
+            "rent_date",
+            "return_date",
+            "payments",
             "created_at",
             "updated_at",
         ]
