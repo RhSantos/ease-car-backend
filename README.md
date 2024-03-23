@@ -19,6 +19,8 @@ undefined
 
 ## :package: Dependencies
 - Django REST Framework
+- Pillow (Image Library)
+- Virtual Env (For dependency management)
 
 ## ▶️ Running the Server
 
@@ -77,5 +79,5 @@ Start the Django development server with:
 
 Use this server on:
 
-status: `Running ✅`
+status: `Not Running ❌`
 url: undefined
