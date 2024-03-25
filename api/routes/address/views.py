@@ -1,8 +1,10 @@
+from django.http.response import Http404
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
 from api.models import Address
 from api.serializers import AddressSerializer
+from api.utils.jsend_responses import error_response, fail_response, success_response
 
 
 class AddressViewSet(viewsets.ModelViewSet):
@@ -10,40 +12,44 @@ class AddressViewSet(viewsets.ModelViewSet):
     serializer_class = AddressSerializer
 
     def list(self, request):
-        address = Address.objects.all()
-        serializer = AddressSerializer(address, many=True)
-        return Response(serializer.data)
+        addresses = Address.objects.all()
+        serializer = AddressSerializer(addresses, many=True)
+        return success_response({"addresses": serializer.data})
 
     def retrieve(self, request, pk=None):
         try:
             address = self.get_object()
             serializer = AddressSerializer(address)
             return Response(serializer.data)
-        except Address.DoesNotExist:
-            return Response({"error": "Address not found"}, status=404)
+        except Exception as e:
+            print(e.__class__)
+            return error_response("Address not found")
 
     def create(self, request):
         serializer = AddressSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return success_response(
+                {"address": serializer.data}, status=status.HTTP_201_CREATED
+            )
+        return fail_response(serializer.errors)
 
     def update(self, request, pk=None):
         try:
             address = self.get_object()
-        except Address.DoesNotExist:
-            return Response(
-                {"error": "Address not found"}, status=status.HTTP_404_NOT_FOUND
-            )
+        except Http404:
+            return error_response("Address not found")
 
         serializer = AddressSerializer(address, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return fail_response(serializer.errors)
 
     def destroy(self, request, pk=None):
-        address = self.get_object()
-        address.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        try:
+            address = self.get_object()
+            address.delete()
+        except Http404:
+            return error_response("Address not found")
+        return success_response()
