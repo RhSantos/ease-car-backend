@@ -1,10 +1,59 @@
 import hashlib
 import uuid
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.utils import timezone
 from django.utils.safestring import mark_safe
+
+
+class Address(models.Model):
+    street = models.CharField(max_length=100)
+    number = models.IntegerField()
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    postal_code = models.CharField(max_length=20)
+    country = models.CharField(max_length=50, default="Brasil")
+    complement = models.CharField(max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.street}, {self.city}, {self.state} {self.postal_code}, {self.country}"
+
+
+class ProfileUserManager(BaseUserManager):
+    def create_user(self, email, password=None, **extra_fields):
+        if not email:
+            raise ValueError("The Email field must be set")
+        email = self.normalize_email(email)
+        profile_user = self.model(email=email, **extra_fields)
+        profile_user.set_password(password)
+        profile_user.profile_pic = extra_fields.get("profile_pic")
+        profile_user.address = extra_fields.get("address")
+        profile_user.save(using=self._db)
+        return profile_user
+
+    def create_superuser(self, email, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+
+        return self.create_user(email, password, **extra_fields)
+
+
+class ProfileUser(AbstractUser):
+    profile_pic = models.ImageField(upload_to="user/")
+    address = models.ForeignKey(
+        Address, on_delete=models.CASCADE, blank=True, null=True
+    )
+
+    REQUIRED_FIELDS = ["email"]
+
+    objects = ProfileUserManager()
+
+    def thumbnail(self):
+        img_url = self.profile_pic.url if self.profile_pic else ""
+        return mark_safe('<img src="%s" height="80px"/>' % img_url)
+
+    thumbnail.allow_tags = True
 
 
 class Brand(models.Model):
@@ -58,21 +107,8 @@ class Car(models.Model):
     image_preview.allow_tags = True
 
 
-class Address(models.Model):
-    street = models.CharField(max_length=100)
-    number = models.IntegerField()
-    city = models.CharField(max_length=50)
-    state = models.CharField(max_length=50)
-    postal_code = models.CharField(max_length=20)
-    country = models.CharField(max_length=50, default="Brasil")
-    complement = models.CharField(max_length=100, blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.street}, {self.city}, {self.state} {self.postal_code}, {self.country}"
-
-
 class Rental(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     car = models.ForeignKey(Car, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
@@ -87,7 +123,7 @@ class Rental(models.Model):
 
 class Review(models.Model):
 
-    reviewer = models.ForeignKey(User, on_delete=models.CASCADE)
+    reviewer = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
     stars = models.DecimalField(max_length=2, decimal_places=1, max_digits=2)
     comment = models.CharField(max_length=50)
@@ -104,7 +140,7 @@ class Review(models.Model):
 
 class Favorite(models.Model):
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
@@ -158,7 +194,7 @@ class Payment(models.Model):
 
 class Booking(models.Model):
 
-    renter = models.ForeignKey(User, on_delete=models.CASCADE)
+    renter = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
     location = models.ForeignKey(Address, on_delete=models.CASCADE)
     rent_date = models.DateTimeField()
@@ -170,6 +206,6 @@ class Booking(models.Model):
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
         super(Booking, self).save(*args, **kwargs)
-    
+
     def __str__(self):
         return f"{self.id} [{self.renter} - {self.rental}]"
