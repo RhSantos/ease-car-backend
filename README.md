@@ -1,7 +1,7 @@
 # 🛠 EaseCar Backend
 
 ## ℹ️ About the Backend
-EaseCar App Backend using **Python Django 5.0.3**
+Car Rental Backend using **Python Django 5.0.3**
 
 ## 🌐 API Routes
 ```bash
