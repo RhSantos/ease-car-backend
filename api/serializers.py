@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
-from .models import Address, Booking, Brand, Car, Favorite, Payment, Rental, Review
+from authentication.models import Address
+
+from .models import Booking, Brand, Car, Favorite, Payment, Rental, Review
 
 
 class BrandSerializer(serializers.ModelSerializer):

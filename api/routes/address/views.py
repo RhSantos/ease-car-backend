@@ -2,7 +2,7 @@ from django.http.response import Http404
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
-from api.models import Address
+from authentication.models import Address
 from api.serializers import AddressSerializer
 from api.utils.jsend_responses import error_response, fail_response, success_response
 
