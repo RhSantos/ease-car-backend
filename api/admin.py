@@ -1,12 +1,6 @@
 from django.contrib import admin
 
-from .models import Booking, Brand, Car, Favorite, Payment, ProfileUser, Rental, Review
-
-
-@admin.register(ProfileUser)
-class ProfileUserAdmin(admin.ModelAdmin):
-    fields = ["username", "email", "first_name", "last_name", "profile_pic", "address"]
-    list_display = ["id", "thumbnail", "username", "email"]
+from .models import Booking, Brand, Car, Favorite, Payment, Rental, Review
 
 
 @admin.register(Brand)

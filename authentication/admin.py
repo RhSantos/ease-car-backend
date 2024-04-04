@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Address
+
+from .models import Address, ProfileUser
+
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
@@ -8,3 +10,9 @@ class AddressAdmin(admin.ModelAdmin):
 
     list_display = all_fields
     read_only = parent_fields
+
+
+@admin.register(ProfileUser)
+class ProfileUserAdmin(admin.ModelAdmin):
+    fields = ["username", "email", "first_name", "last_name", "profile_pic", "address"]
+    list_display = ["id", "thumbnail", "username", "email"]
