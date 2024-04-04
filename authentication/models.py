@@ -1,5 +1,6 @@
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils.safestring import mark_safe
 
 
 class ProfileUserManager(BaseUserManager):
@@ -32,3 +33,20 @@ class Address(models.Model):
 
     def __str__(self):
         return f"{self.street}, {self.city}, {self.state} {self.postal_code}, {self.country}"
+
+
+class ProfileUser(AbstractUser):
+    profile_pic = models.ImageField(upload_to="user/")
+    address = models.ForeignKey(
+        Address, on_delete=models.CASCADE, blank=True, null=True
+    )
+
+    REQUIRED_FIELDS = ["email"]
+
+    objects = ProfileUserManager()
+
+    def thumbnail(self):
+        img_url = self.profile_pic.url if self.profile_pic else ""
+        return mark_safe('<img src="%s" height="80px"/>' % img_url)
+
+    thumbnail.allow_tags = True
