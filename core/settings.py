@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "authentication",
     "api",
 ]
 
@@ -84,7 +85,7 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'api.ProfileUser'
+AUTH_USER_MODEL = 'authentication.ProfileUser'
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES" : (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
