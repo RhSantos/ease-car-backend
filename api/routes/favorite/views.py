@@ -1,10 +1,9 @@
 from django.http.response import Http404
 from rest_framework import status, viewsets
-from rest_framework.response import Response
 
 from api.models import Favorite
 from api.serializers import FavoriteSerializer
-from api.utils.jsend_responses import error_response, fail_response, success_response
+from utils.jsend_responses import *
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):
@@ -14,15 +13,14 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     def list(self, request):
         favorites = Favorite.objects.all()
         serializer = FavoriteSerializer(favorites, many=True)
-        return success_response({"favorites": serializer.data})
+        return success_response(key="favorites", data=serializer.data)
 
     def retrieve(self, request, pk=None):
         try:
             favorite = self.get_object()
             serializer = FavoriteSerializer(favorite)
-            return Response(serializer.data)
-        except Exception as e:
-            print(e.__class__)
+            return success_response(key="favorite", data=serializer.data)
+        except Exception:
             return error_response("Favorite not found")
 
     def create(self, request):
@@ -43,7 +41,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
         serializer = FavoriteSerializer(favorite, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return success_response(serializer.data)
         return fail_response(serializer.errors)
 
     def destroy(self, request, pk=None):
