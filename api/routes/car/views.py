@@ -1,10 +1,9 @@
 from django.http.response import Http404
 from rest_framework import status, viewsets
-from rest_framework.response import Response
 
 from api.models import Car
 from api.serializers import CarSerializer
-from api.utils.jsend_responses import error_response, fail_response, success_response
+from utils.jsend_responses import *
 
 
 class CarViewSet(viewsets.ModelViewSet):
@@ -14,15 +13,14 @@ class CarViewSet(viewsets.ModelViewSet):
     def list(self, request):
         cars = Car.objects.all()
         serializer = CarSerializer(cars, many=True)
-        return success_response({"cars": serializer.data})
+        return success_response(key="cars", data=serializer.data)
 
     def retrieve(self, request, pk=None):
         try:
             car = self.get_object()
             serializer = CarSerializer(car)
-            return Response(serializer.data)
-        except Exception as e:
-            print(e.__class__)
+            return success_response(key="car", data=serializer.data)
+        except Http404:
             return error_response("Car not found")
 
     def create(self, request):
@@ -30,7 +28,7 @@ class CarViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             return success_response(
-                {"car": serializer.data}, status=status.HTTP_201_CREATED
+                key="car", data=serializer.data, status=status.HTTP_201_CREATED
             )
         return fail_response(serializer.errors)
 
@@ -43,7 +41,7 @@ class CarViewSet(viewsets.ModelViewSet):
         serializer = CarSerializer(car, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return success_response(key="car", data=serializer.data)
         return fail_response(serializer.errors)
 
     def destroy(self, request, pk=None):
