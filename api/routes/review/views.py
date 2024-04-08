@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from api.models import Review
 from api.serializers import ReviewSerializer
-from api.utils.jsend_responses import error_response, fail_response, success_response
+from utils.jsend_responses import *
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
@@ -14,15 +14,14 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def list(self, request):
         reviews = Review.objects.all()
         serializer = ReviewSerializer(reviews, many=True)
-        return success_response({"reviews": serializer.data})
+        return success_response(key="reviews", data=serializer.data)
 
     def retrieve(self, request, pk=None):
         try:
             review = self.get_object()
             serializer = ReviewSerializer(review)
-            return Response(serializer.data)
-        except Exception as e:
-            print(e.__class__)
+            return success_response(key="review", data=serializer.data)
+        except Exception:
             return error_response("Review not found")
 
     def create(self, request):
@@ -30,7 +29,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save()
             return success_response(
-                {"review": serializer.data}, status=status.HTTP_201_CREATED
+                key="review", data=serializer.data, status=status.HTTP_201_CREATED
             )
         return fail_response(serializer.errors)
 
@@ -43,7 +42,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer = ReviewSerializer(review, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return success_response(key="review", data=serializer.data)
         return fail_response(serializer.errors)
 
     def destroy(self, request, pk=None):
