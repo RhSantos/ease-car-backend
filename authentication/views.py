@@ -4,14 +4,14 @@ from rest_framework.generics import CreateAPIView
 from utils.jsend_responses import *
 
 from .models import Address
-from .serializers import ProfileUserSerializer
+from .serializers import RegisterSerializer
 
 
 class RegisterAPIView(CreateAPIView):
-    serializer_class = ProfileUserSerializer
+    serializer_class = RegisterSerializer
 
     def post(self, request):
-        serializer = ProfileUserSerializer(data=request.data)
+        serializer = RegisterSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()

@@ -1,13 +1,9 @@
-from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
-
-from api.serializers import AddressSerializer
 
 from .models import Address, ProfileUser
 
 
-class ProfileUserSerializer(serializers.ModelSerializer):
+class RegisterSerializer(serializers.ModelSerializer):
     address = serializers.PrimaryKeyRelatedField(queryset=Address.objects.all())
 
     class Meta:
@@ -21,8 +17,8 @@ class ProfileUserSerializer(serializers.ModelSerializer):
             "last_name",
             "address",
         ]
-    
+
     def to_representation(self, data):
-        data = super(ProfileUserSerializer, self).to_representation(data)
-        data['address'] = Address.objects.filter(id=data['address']).values()
+        data = super(RegisterSerializer, self).to_representation(data)
+        data["address"] = Address.objects.filter(id=data["address"]).values()
         return data
