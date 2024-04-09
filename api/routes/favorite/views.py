@@ -1,5 +1,6 @@
 from django.http.response import Http404
 from rest_framework import status, viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from api.models import Favorite
 from api.serializers import FavoriteSerializer
@@ -9,6 +10,7 @@ from utils.jsend_responses import *
 class FavoriteViewSet(viewsets.ModelViewSet):
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
+    permission_classes = [IsAuthenticated]
 
     def list(self, request):
         favorites = Favorite.objects.all()
