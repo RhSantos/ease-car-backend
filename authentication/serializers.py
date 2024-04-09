@@ -31,3 +31,16 @@ class RegisterSerializer(serializers.ModelSerializer):
         except:
             data["address"] = None
         return data
+
+
+class LoginSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ProfileUser
+        fields = [
+            "id",
+            "email",
+            "password",
+        ]
+
+        extra_kwargs = {"password": {"write_only": True}}
