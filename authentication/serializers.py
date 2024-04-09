@@ -28,7 +28,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         data = super(RegisterSerializer, self).to_representation(data)
         try:
             data["address"] = Address.objects.filter(id=data["address"]).values()[0]
-        except:
+        except IndexError:
             data["address"] = None
         return data
 
