@@ -120,6 +120,8 @@ class Payment(models.Model):
         ("failed", "Failed"),
     )
 
+    owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
+
     payment_type = models.CharField(
         max_length=20, choices=PAYMENT_TYPES, default="creditCard"
     )
