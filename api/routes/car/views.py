@@ -1,5 +1,6 @@
 from django.http.response import Http404
 from rest_framework import status, viewsets
+from rest_framework.permissions import IsAdminUser
 
 from api.models import Car
 from api.serializers import CarSerializer
@@ -9,6 +10,16 @@ from utils.jsend_responses import *
 class CarViewSet(viewsets.ModelViewSet):
     queryset = Car.objects.all()
     serializer_class = CarSerializer
+
+    def get_permissions(self):
+
+        admin_only = ["create", "update", "destroy"]
+
+        if self.action in admin_only:
+            return [
+                IsAdminUser(),
+            ]
+        return []
 
     def list(self, request):
         cars = Car.objects.all()
