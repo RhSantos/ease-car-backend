@@ -26,5 +26,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def to_representation(self, data):
         data = super(RegisterSerializer, self).to_representation(data)
-        data["address"] = Address.objects.filter(id=data["address"]).values()[0]
+        try:
+            data["address"] = Address.objects.filter(id=data["address"]).values()[0]
+        except:
+            data["address"] = None
         return data
