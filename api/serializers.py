@@ -91,6 +91,7 @@ class PaymentSerializer(serializers.ModelSerializer):
         model = Payment
         fields = [
             "id",
+            "owner",
             "payment_type",
             "payment_hash",
             "payment_status",
