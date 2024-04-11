@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
+
 from authentication.models import ProfileUser
 from utils.jsend_responses import *
 
@@ -43,8 +44,8 @@ class LoginAPIView(CreateAPIView):
 
                 data = {
                     "user": user_serializer.data,
-                    "token": str(refresh_token),
-                    "refresh-token": str(refresh_token.access_token),
+                    "access-token": str(refresh_token.access_token),
+                    "refresh-token": str(refresh_token),
                 }
 
                 return success_response(
