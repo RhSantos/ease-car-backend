@@ -85,9 +85,12 @@ DATABASES = {
     }
 }
 
-AUTH_USER_MODEL = 'authentication.ProfileUser'
+AUTH_USER_MODEL = "authentication.ProfileUser"
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES" : (
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
