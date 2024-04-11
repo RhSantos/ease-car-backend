@@ -97,6 +97,7 @@ class PaymentSerializer(serializers.ModelSerializer):
             "payment_status",
             "amount",
             "description",
+            "bill_date",
             "created_at",
             "updated_at",
         ]
