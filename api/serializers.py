@@ -53,7 +53,7 @@ class RentalSerializer(serializers.ModelSerializer):
         model = Rental
         fields = [
             "id",
-            "renter",
+            "owner",
             "car",
             "created_at",
             "updated_at",
