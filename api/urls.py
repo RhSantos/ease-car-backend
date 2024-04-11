@@ -6,6 +6,7 @@ from .routes.booking.views import BookingViewSet
 from .routes.brand.views import BrandViewSet
 from .routes.car.views import CarViewSet
 from .routes.favorite.views import FavoriteViewSet
+from .routes.payment.views import PaymentViewSet
 from .routes.rental.views import RentalViewSet
 from .routes.review.views import ReviewViewSet
 
@@ -17,6 +18,7 @@ router.register("rental", RentalViewSet)
 router.register("review", ReviewViewSet)
 router.register("favorite", FavoriteViewSet)
 router.register("booking", BookingViewSet)
+router.register("payment", PaymentViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
