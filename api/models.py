@@ -108,16 +108,16 @@ class Favorite(models.Model):
 
 class Payment(models.Model):
     PAYMENT_TYPES = (
-        ("creditCard", "Credit Card"),
-        ("debitCard", "Debit Card"),
-        ("cash", "Cash"),
+        ("CREDIT_CARD", "Credit Card"),
+        ("DEBIT_CARD", "Debit Card"),
+        ("CASH", "Cash"),
     )
 
     PAYMENT_STATUS = (
-        ("pending", "Pending"),
-        ("completed", "Completed"),
-        ("cancelled", "Cancelled"),
-        ("failed", "Failed"),
+        ("PENDING", "Pending"),
+        ("COMPLETED", "Completed"),
+        ("CANCELLED", "Cancelled"),
+        ("FAILED", "Failed"),
     )
 
     owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
