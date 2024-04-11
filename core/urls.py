@@ -12,6 +12,7 @@ urlpatterns = [
     path("auth/register/", RegisterAPIView.as_view()),
     path("auth/login/", LoginAPIView.as_view()),
     path("api/", include("api.urls")),
+    path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
