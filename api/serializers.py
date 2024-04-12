@@ -79,7 +79,7 @@ class FavoriteSerializer(serializers.ModelSerializer):
         model = Favorite
         fields = [
             "id",
-            "user",
+            "owner",
             "rental",
             "created_at",
             "updated_at",
