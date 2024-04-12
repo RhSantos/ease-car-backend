@@ -93,7 +93,7 @@ class Review(models.Model):
 
 class Favorite(models.Model):
 
-    user = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
+    owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     rental = models.ForeignKey(Rental, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
