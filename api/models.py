@@ -67,7 +67,7 @@ class Rental(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.renter} - {self.car}"
+        return f"{self.owner} - {self.car}"
 
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
