@@ -107,27 +107,26 @@ class Favorite(models.Model):
 
 
 class Payment(models.Model):
-    PAYMENT_TYPES = (
-        ("CREDIT_CARD", "Credit Card"),
-        ("DEBIT_CARD", "Debit Card"),
-        ("CASH", "Cash"),
-    )
 
-    PAYMENT_STATUS = (
-        ("PENDING", "Pending"),
-        ("COMPLETED", "Completed"),
-        ("CANCELLED", "Cancelled"),
-        ("FAILED", "Failed"),
-    )
+    class PaymentType(models.TextChoices):
+        CREDIT_CARD = "Credit Card"
+        DEBIT_CARD = "Debit Card"
+        CASH = "Cash"
+
+    class PaymentStatus(models.TextChoices):
+        PENDING = "Pending"
+        COMPLETED = "Completed"
+        CANCELLED = "Cancelled"
+        FAILED = "Failed"
 
     owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
 
     payment_type = models.CharField(
-        max_length=20, choices=PAYMENT_TYPES, default="creditCard"
+        max_length=20, choices=PaymentType.choices, default=PaymentType.CREDIT_CARD
     )
     payment_hash = models.CharField(max_length=100, editable=False)
     payment_status = models.CharField(
-        max_length=20, choices=PAYMENT_STATUS, default="pending"
+        max_length=20, choices=PaymentStatus.choices, default=PaymentStatus.PENDING
     )
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField(blank=True)
