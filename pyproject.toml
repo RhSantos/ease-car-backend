@@ -3,6 +3,7 @@ name = "ease-car-backend"
 version = "0.1.0"
 description = ""
 authors = ["RhSantos <rhuan.santos.araujo@gmail.com>"]
+license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
