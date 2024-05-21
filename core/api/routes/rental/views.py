@@ -1,9 +1,9 @@
 from django.http.response import Http404
 from rest_framework import status, viewsets
 
-from api.models import Rental
-from api.serializers import RentalSerializer
-from utils.jsend_responses import *
+from core.api.models import Rental
+from core.api.serializers import RentalSerializer
+from core.utils.jsend_responses import *
 
 
 class RentalViewSet(viewsets.ModelViewSet):

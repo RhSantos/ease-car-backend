@@ -1,9 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser
 
-from api.models import Brand
-from api.serializers import BrandSerializer
-from utils.jsend_responses import success_response
+from core.api.models import Brand
+from core.api.serializers import BrandSerializer
+from core.utils.jsend_responses import success_response
 
 
 class BrandViewSet(viewsets.ModelViewSet):

@@ -1,36 +1,38 @@
 from django.http.response import Http404
 from rest_framework import status, viewsets
 
-from api.models import Booking
-from api.serializers import BookingSerializer
-from utils.jsend_responses import *
+from core.api.models import Booking
+from core.api.serializers import BookingRequestSerializer, BookingResponseSerializer
+from core.utils.jsend_responses import *
 
 
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all()
-    serializer_class = BookingSerializer
+    serializer_class = BookingRequestSerializer
 
     def list(self, request):
         bookings = Booking.objects.all()
-        serializer = BookingSerializer(bookings, many=True)
+        serializer = BookingResponseSerializer(bookings, many=True)
         return success_response(key="bookings", data=serializer.data)
 
     def retrieve(self, request, pk=None):
         try:
             booking = self.get_object()
-            serializer = BookingSerializer(booking)
+            serializer = BookingResponseSerializer(booking)
             return success_response(key="bookings", data=serializer.data)
         except Http404:
             return error_response("Booking not found")
 
     def create(self, request):
-        serializer = BookingSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+        request_serializer = BookingRequestSerializer(data=request.data)
+        if request_serializer.is_valid():
+            request_serializer.save()
             return success_response(
-                key="booking", data=serializer.data, status=status.HTTP_201_CREATED
+                key="booking",
+                data=request_serializer.data,
+                status=status.HTTP_201_CREATED,
             )
-        return fail_response(serializer.errors)
+        return fail_response(request_serializer.errors)
 
     def update(self, request, pk=None):
         try:
@@ -38,7 +40,7 @@ class BookingViewSet(viewsets.ModelViewSet):
         except Http404:
             return error_response("Booking not found")
 
-        serializer = BookingSerializer(booking, data=request.data)
+        serializer = BookingRequestSerializer(booking, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return success_response(key="booking", data=serializer.data)

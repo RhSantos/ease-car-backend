@@ -2,9 +2,9 @@ from django.http.response import Http404
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
-from api.models import Review
-from api.serializers import ReviewSerializer
-from utils.jsend_responses import *
+from core.api.models import Review
+from core.api.serializers import ReviewSerializer
+from core.utils.jsend_responses import *
 
 
 class ReviewViewSet(viewsets.ModelViewSet):

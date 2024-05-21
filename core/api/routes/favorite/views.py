@@ -2,10 +2,10 @@ from django.http.response import Http404
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAuthenticated
 
-from api.models import Favorite
-from api.serializers import FavoriteSerializer
-from authentication.models import ProfileUser
-from utils.jsend_responses import *
+from core.api.models import Favorite
+from core.api.serializers import FavoriteSerializer
+from core.authentication.models import ProfileUser
+from core.utils.jsend_responses import *
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):

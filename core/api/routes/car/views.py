@@ -2,9 +2,9 @@ from django.http.response import Http404
 from rest_framework import status, viewsets
 from rest_framework.permissions import IsAdminUser
 
-from api.models import Car
-from api.serializers import CarSerializer
-from utils.jsend_responses import *
+from core.api.models import Car
+from core.api.serializers import CarSerializer
+from core.utils.jsend_responses import *
 
 
 class CarViewSet(viewsets.ModelViewSet):

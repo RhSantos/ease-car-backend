@@ -2,16 +2,16 @@ from django.http.response import Http404
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
-from api.models import Payment
-from api.serializers import PaymentSerializer
-from authentication.models import ProfileUser
-from utils.jsend_responses import *
+from core.api.models import Payment
+from core.api.serializers import PaymentResponseSerializer
+from core.authentication.models import ProfileUser
+from core.utils.jsend_responses import *
 
 
 class PaymentViewSet(viewsets.ModelViewSet):
 
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
+    serializer_class = PaymentResponseSerializer
 
     def get_permissions(self):
 
@@ -27,7 +27,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
 
     def list(self, request):
         payments = Payment.objects.filter(owner=request.user)
-        serializer = PaymentSerializer(payments, many=True)
+        serializer = PaymentResponseSerializer(payments, many=True)
         return success_response(key="payments", data=serializer.data)
 
     def retrieve(self, request, pk=None):
@@ -35,7 +35,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
             payment = self.get_object()
 
             if payment.owner == request.user:
-                serializer = PaymentSerializer(payment)
+                serializer = PaymentResponseSerializer(payment)
                 return success_response(key="payment", data=serializer.data)
 
             return fail_response(
