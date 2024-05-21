@@ -41,7 +41,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
                 serializer.save()
                 return success_response(key="favorite", data=serializer.data)
             return fail_response(
-                {"user": "You are not Favorite Owzner"},
+                {"user": "You are not Favorite Owner"},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
 
