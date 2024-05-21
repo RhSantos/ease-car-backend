@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "ease-car-backend"
+version = "0.1.0"
+description = ""
+authors = ["RhSantos <rhuan.santos.araujo@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+asgiref = "3.7.2"
+distlib = "0.3.8"
+django = "4.2.11"
+django-background-tasks = "1.2.5"
+django-compat = "1.0.15"
+django-environ = "0.11.2"
+django-filter = "24.1"
+django4-background-tasks = "1.2.9"
+djangorestframework = "3.14.0"
+djangorestframework-simplejwt = "5.3.1"
+filelock = "3.13.1"
+markdown = "3.5.2"
+pillow = "10.2.0"
+platformdirs = "4.2.0"
+psycopg2 = "2.9.9"
+pyjwt = "2.8.0"
+python-dotenv = "1.0.1"
+pytz = "2024.1"
+six = "1.16.0"
+sqlparse = "0.4.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
