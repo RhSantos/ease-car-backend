@@ -1,6 +1,9 @@
 from rest_framework import mixins, viewsets
 from rest_framework_simplejwt.exceptions import TokenError
-from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.serializers import (
+    TokenRefreshSerializer,
+    TokenVerifySerializer,
+)
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from core.authentication.models import AppUser
@@ -69,6 +72,21 @@ class TokenRefreshViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
                     key="auth",
                     data={"access-token": serializer.validated_data["access"]},
                 )
+        except TokenError:
+            return fail_response({"token": "Token is invalid or expired"})
+
+        return fail_response(serializer.errors)
+
+
+class TokenVerifyViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
+
+    serializer_class = TokenVerifySerializer
+
+    def create(self, request):
+        serializer = TokenVerifySerializer(data=request.data)
+        try:
+            if serializer.is_valid():
+                return success_response()
         except TokenError:
             return fail_response({"token": "Token is invalid or expired"})
 
