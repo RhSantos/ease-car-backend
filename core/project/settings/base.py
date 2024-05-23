@@ -21,7 +21,6 @@ THIRD_PARTY_APPS = [
 
 EXTERNAL_APPS = [
     "core.authentication",
-    "core.api",
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS
