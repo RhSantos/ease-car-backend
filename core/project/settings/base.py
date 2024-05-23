@@ -20,7 +20,15 @@ THIRD_PARTY_APPS = [
 ]
 
 EXTERNAL_APPS = [
+    "core.address",
     "core.authentication",
+    "core.brand",
+    "core.car",
+    "core.rental",
+    "core.review",
+    "core.favorite",
+    "core.payment",
+    "core.booking",
 ]
 
 INSTALLED_APPS += THIRD_PARTY_APPS
