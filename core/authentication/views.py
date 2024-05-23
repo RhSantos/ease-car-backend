@@ -3,7 +3,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from core.authentication.models import ProfileUser
-from core.general.utils.jsend_responses import *
+from core.general.utils.responses import *
 
 from .models import Address
 from .serializers import LoginSerializer, RegisterSerializer

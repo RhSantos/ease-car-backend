@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.views import exception_handler
 
-from core.general.utils.jsend_responses import *
+from core.general.utils.responses import *
 
 
 def _handler_authentication_error(exc, context, response):

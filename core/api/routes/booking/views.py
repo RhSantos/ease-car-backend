@@ -3,7 +3,7 @@ from rest_framework import status, viewsets
 
 from core.api.models import Booking
 from core.api.serializers import BookingRequestSerializer, BookingResponseSerializer
-from core.general.utils.jsend_responses import *
+from core.general.utils.responses import *
 
 
 class BookingViewSet(viewsets.ModelViewSet):

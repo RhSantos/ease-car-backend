@@ -3,7 +3,7 @@ from rest_framework import status, viewsets
 
 from core.api.models import Rental
 from core.api.serializers import RentalSerializer
-from core.general.utils.jsend_responses import *
+from core.general.utils.responses import *
 
 
 class RentalViewSet(viewsets.ModelViewSet):
