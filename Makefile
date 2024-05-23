@@ -20,3 +20,8 @@ superuser:
 
 .PHONY: update
 update: install migrate ;
+
+.PHONY: createapp
+createapp:
+	poetry run django-admin startapp $(app_name)
+	mv $(app_name)/ ./core/apps/
