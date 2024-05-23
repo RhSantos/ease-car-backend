@@ -1,10 +1,10 @@
 from django.db import models
 from django.utils import timezone
 
-from core.address.models import Address
-from core.authentication.models import ProfileUser
-from core.payment.models import Payment
-from core.rental.models import Rental
+from core.apps.address.models import Address
+from core.apps.authentication.models import ProfileUser
+from core.apps.payment.models import Payment
+from core.apps.rental.models import Rental
 
 
 class Booking(models.Model):

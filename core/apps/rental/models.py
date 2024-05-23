@@ -1,6 +1,6 @@
 from django.db import models
-from core.authentication.models import ProfileUser
-from core.car.models import Car
+from core.apps.authentication.models import ProfileUser
+from core.apps.car.models import Car
 from django.utils import timezone
 
 class Rental(models.Model):

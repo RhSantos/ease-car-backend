@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from core.brand.models import Brand
+from core.apps.brand.models import Brand
 
 
 class Car(models.Model):

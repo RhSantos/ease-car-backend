@@ -6,7 +6,7 @@ from rest_framework_simplejwt.serializers import (
 )
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from core.authentication.models import ProfileUser
+from core.apps.authentication.models import ProfileUser
 from core.general.utils.helpers import format_multipart_form_data_field
 from core.general.utils.responses import *
 

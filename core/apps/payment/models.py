@@ -4,7 +4,7 @@ import uuid
 from django.db import models
 from django.utils import timezone
 
-from core.authentication.models import ProfileUser
+from core.apps.authentication.models import ProfileUser
 
 
 class Payment(models.Model):

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.address.models import Address
+from core.apps.address.models import Address
 
 from .models import ProfileUser
 

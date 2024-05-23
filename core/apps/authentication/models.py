@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.safestring import mark_safe
 
-from core.address.models import Address
+from core.apps.address.models import Address
 from core.general.managers import ProfileUserManager
 
 

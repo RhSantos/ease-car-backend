@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
-from core.authentication.models import ProfileUser
-from core.rental.models import Rental
+from core.apps.authentication.models import ProfileUser
+from core.apps.rental.models import Rental
 
 
 class Review(models.Model):

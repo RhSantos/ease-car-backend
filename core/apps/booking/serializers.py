@@ -5,10 +5,10 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from core.address.serializers import AddressSerializer
-from core.payment.models import Payment
-from core.rental.models import Rental
-from core.rental.serializers import RentalSerializer
+from core.apps.address.serializers import AddressSerializer
+from core.apps.payment.models import Payment
+from core.apps.rental.models import Rental
+from core.apps.rental.serializers import RentalSerializer
 
 from .models import Booking
 
