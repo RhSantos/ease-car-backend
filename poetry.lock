@@ -103,6 +103,17 @@ files = [
 Django = ">=4.2"
 
 [[package]]
+name = "django-split-settings"
+version = "1.3.1"
+description = "Organize Django settings into multiple files and directories. Easily override and modify settings. Use wildcards and optional settings files."
+optional = false
+python-versions = "<4.0,>=3.9"
+files = [
+    {file = "django_split_settings-1.3.1-py3-none-any.whl", hash = "sha256:c902ef60d5fe8190ff224284f68e3c9015b6f1aca9e9d6bd70bf86394ff32634"},
+    {file = "django_split_settings-1.3.1.tar.gz", hash = "sha256:c1f57f6b54fc0d93082c12163e76fad082c214f5fa0d16d84a1226d2c9f14f26"},
+]
+
+[[package]]
 name = "django4-background-tasks"
 version = "1.2.9"
 description = "Database backed asynchronous task queue"
@@ -390,4 +401,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "04ea3eb057fa3d9d30c888dedd152b735c40d9b73271d2693fe94b7bc68f102a"
+content-hash = "747c24ea0eb896b1e9b51e693e0e09fdaf67894d55ca17d81843965e5b0a4eed"
