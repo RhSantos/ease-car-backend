@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAdminUser
 
 from core.api.models import Car
 from core.api.serializers import CarSerializer
-from core.utils.jsend_responses import *
+from core.general.utils.jsend_responses import *
 
 
 class CarViewSet(viewsets.ModelViewSet):

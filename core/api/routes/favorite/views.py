@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from core.api.models import Favorite
 from core.api.serializers import FavoriteSerializer
 from core.authentication.models import ProfileUser
-from core.utils.jsend_responses import *
+from core.general.utils.jsend_responses import *
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):

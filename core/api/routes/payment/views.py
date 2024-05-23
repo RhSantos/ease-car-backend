@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from core.api.models import Payment
 from core.api.serializers import PaymentResponseSerializer
 from core.authentication.models import ProfileUser
-from core.utils.jsend_responses import *
+from core.general.utils.jsend_responses import *
 
 
 class PaymentViewSet(viewsets.ModelViewSet):

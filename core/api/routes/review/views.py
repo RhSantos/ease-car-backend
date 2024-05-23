@@ -4,7 +4,7 @@ from rest_framework.response import Response
 
 from core.api.models import Review
 from core.api.serializers import ReviewSerializer
-from core.utils.jsend_responses import *
+from core.general.utils.jsend_responses import *
 
 
 class ReviewViewSet(viewsets.ModelViewSet):

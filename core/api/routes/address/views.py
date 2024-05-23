@@ -3,7 +3,7 @@ from rest_framework import status, viewsets
 
 from core.api.serializers import AddressSerializer
 from core.authentication.models import Address
-from core.utils.jsend_responses import *
+from core.general.utils.jsend_responses import *
 
 
 class AddressViewSet(viewsets.ModelViewSet):
