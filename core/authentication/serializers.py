@@ -1,6 +1,8 @@
 from rest_framework import serializers
 
-from .models import Address, ProfileUser
+from core.address.models import Address
+
+from .models import ProfileUser
 
 
 class RegisterSerializer(serializers.ModelSerializer):
