@@ -4,20 +4,20 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
-from core.address.views import AddressViewSet
-from core.authentication.views import (
+from core.apps.address.views import AddressViewSet
+from core.apps.authentication.views import (
     LoginViewSet,
     RegisterViewSet,
     TokenRefreshViewSet,
     TokenVerifyViewSet,
 )
-from core.booking.views import BookingViewSet
-from core.brand.views import BrandViewSet
-from core.car.views import CarViewSet
-from core.favorite.views import FavoriteViewSet
-from core.payment.views import PaymentViewSet
-from core.rental.views import RentalViewSet
-from core.review.views import ReviewViewSet
+from core.apps.booking.views import BookingViewSet
+from core.apps.brand.views import BrandViewSet
+from core.apps.car.views import CarViewSet
+from core.apps.favorite.views import FavoriteViewSet
+from core.apps.payment.views import PaymentViewSet
+from core.apps.rental.views import RentalViewSet
+from core.apps.review.views import ReviewViewSet
 
 router = DefaultRouter()
 
