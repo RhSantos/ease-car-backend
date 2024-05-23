@@ -6,7 +6,7 @@ from rest_framework_simplejwt.serializers import (
 )
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from core.authentication.models import AppUser
+from core.authentication.models import ProfileUser
 from core.general.utils.helpers import format_multipart_form_data_field
 from core.general.utils.responses import *
 
@@ -38,7 +38,7 @@ class LoginViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
         if serializer.is_valid():
             email = request.data.get("email")
             password = request.data.get("password")
-            user = AppUser.objects.get(email=email)
+            user = ProfileUser.objects.get(email=email)
 
             if not user:
                 return error_response("User not found")
