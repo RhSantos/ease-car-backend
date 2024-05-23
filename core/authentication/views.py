@@ -1,19 +1,20 @@
-from rest_framework import status
-from rest_framework.generics import CreateAPIView
+from rest_framework import mixins, viewsets
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from core.authentication.models import ProfileUser
+from core.authentication.models import AppUser
+from core.general.utils.helpers import format_multipart_form_data_field
 from core.general.utils.responses import *
 
-from .models import Address
 from .serializers import LoginSerializer, RegisterSerializer
 
 
-class RegisterAPIView(CreateAPIView):
+class RegisterViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
     serializer_class = RegisterSerializer
 
-    def post(self, request):
-        serializer = RegisterSerializer(data=request.data)
+    def create(self, request):
+        data = format_multipart_form_data_field(request.data, "address")
+
+        serializer = RegisterSerializer(data=data)
 
         if serializer.is_valid():
             serializer.save()
@@ -23,16 +24,16 @@ class RegisterAPIView(CreateAPIView):
         return fail_response(serializer.errors)
 
 
-class LoginAPIView(CreateAPIView):
+class LoginViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
     serializer_class = LoginSerializer
 
-    def post(self, request):
+    def create(self, request):
         serializer = LoginSerializer(data=request.data)
 
         if serializer.is_valid():
             email = request.data.get("email")
             password = request.data.get("password")
-            user = ProfileUser.objects.get(email=email)
+            user = AppUser.objects.get(email=email)
 
             if not user:
                 return error_response("User not found")
