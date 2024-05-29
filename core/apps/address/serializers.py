@@ -10,6 +10,7 @@ class AddressSerializer(serializers.ModelSerializer):
             "id",
             "street",
             "number",
+            "province",
             "city",
             "state",
             "postal_code",
