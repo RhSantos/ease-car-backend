@@ -8,11 +8,22 @@ from core.general.managers import ProfileUserManager
 
 class ProfileUser(AbstractUser):
     profile_pic = models.ImageField(upload_to="user/")
+    cpf = models.CharField(max_length=11, unique=True, verbose_name="CPF")
     address = models.ForeignKey(
         Address, on_delete=models.CASCADE, blank=True, null=True
     )
+    birth_date = models.DateField(verbose_name="Birth Date")
+    mobile_phone = models.CharField(max_length=12, verbose_name="Mobile Phone")
+    is_premium = models.BooleanField(default=False)
 
-    REQUIRED_FIELDS = ["email"]
+    REQUIRED_FIELDS = [
+        "email",
+        "first_name",
+        "last_name",
+        "cpf",
+        "birth_date",
+        "mobile_phone",
+    ]
 
     objects = ProfileUserManager()
 
