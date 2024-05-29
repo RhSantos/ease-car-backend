@@ -111,3 +111,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_ROOT = "media/"
 MEDIA_URL = "/media/"
+
+# Asaas Payment Gateway Secret
+ASAAS_API_KEY = NotImplemented
+ASAAS_API_URL = "https://api.asaas.com/v3/" # Version 3
