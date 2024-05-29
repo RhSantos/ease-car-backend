@@ -3,7 +3,6 @@ from django.utils import timezone
 
 from core.apps.address.models import Address
 from core.apps.authentication.models import ProfileUser
-from core.apps.payment.models import Payment
 from core.apps.rental.models import Rental
 
 
@@ -14,7 +13,6 @@ class Booking(models.Model):
     location = models.ForeignKey(Address, on_delete=models.CASCADE)
     rent_date = models.DateTimeField()
     return_date = models.DateTimeField()
-    payments = models.ManyToManyField(Payment)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
