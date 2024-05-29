@@ -1,33 +1,35 @@
 from rest_framework import serializers
 
-from .models import Payment
+from .models import SubAccount
 
 
-class PaymentRequestSerializer(serializers.ModelSerializer):
+class SubAccountRequestSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Payment
+        model = SubAccount
         fields = [
+            "id",
             "owner",
-            "receiver",
-            "payment_type",
-            "amount",
-            "description",
-            "bill_date",
+            "income_value",
+            "created_at",
+            "updated_at",
         ]
 
 
-class PaymentResponseSerializer(serializers.ModelSerializer):
+class SubAccountResponseSerializer(serializers.ModelSerializer):
+
     class Meta:
-        model = Payment
+        model = SubAccount
         fields = [
-            "payment_hash",
+            "id",
             "owner",
-            "receiver",
-            "payment_type",
-            "payment_status",
-            "amount",
-            "description",
-            "bill_date",
+            "income_value",
+            "income_range",
+            "api_key",
+            "wallet_id",
+            "account_agency",
+            "account_number",
+            "account_digit",
             "created_at",
             "updated_at",
         ]
