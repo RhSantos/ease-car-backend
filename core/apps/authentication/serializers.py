@@ -17,6 +17,10 @@ class RegisterSerializer(serializers.ModelSerializer):
             "username",
             "first_name",
             "last_name",
+            "cpf",
+            "birth_date",
+            "mobile_phone",
+            "is_premium",
             "address",
         ]
 
