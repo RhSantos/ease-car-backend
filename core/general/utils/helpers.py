@@ -1,4 +1,12 @@
 import json
+from enum import Enum
+
+
+class AsaasResourceUrl(Enum):
+    SUB_ACCOUNT = "accounts/"
+
+    def __str__(self) -> str:
+        return self.value
 
 
 def format_multipart_form_data_field(data, field: str):
