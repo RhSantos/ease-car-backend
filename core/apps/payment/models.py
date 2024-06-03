@@ -1,10 +1,9 @@
-import uuid
-
+from django.contrib.auth.hashers import make_password as make_hash
 from django.db import models
 from django.utils import timezone
 
 from core.apps.authentication.models import ProfileUser
-from django.contrib.auth.hashers import make_password as make_hash
+
 
 class SubAccount(models.Model):
     class IncomeRange(models.TextChoices):
@@ -18,10 +17,10 @@ class SubAccount(models.Model):
         FROM_250K_TO_1MM = "FROM_250K_TO_1MM"
         FROM_1MM_TO_5MM = "FROM_1MM_TO_5MM"
         ABOVE_5MM = "ABOVE_5MM"
-    
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    id = models.UUIDField(primary_key=True, editable=False)
     owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
-    income_value = models.DecimalField(max_digits=10,decimal_places=2)
+    income_value = models.DecimalField(max_digits=10, decimal_places=2)
     income_range = models.CharField(max_length=20, choices=IncomeRange.choices)
     api_key = models.CharField(max_length=256)
     wallet_id = models.CharField(max_length=256)
