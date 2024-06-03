@@ -1,15 +1,15 @@
 import uuid
 
-import requests
-from django.conf import settings
 from django.http.response import Http404
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
+from core.general.utils.helpers import AsaasResourceUrl
+from core.general.utils.network import make_asaas_api_call
 from core.general.utils.responses import *
 
-from .models import SubAccount
-from .serializers import SubAccountRequestSerializer, SubAccountResponseSerializer
+from ..models import SubAccount
+from ..serializers import SubAccountRequestSerializer, SubAccountResponseSerializer
 
 
 class SubAccountViewSet(viewsets.ModelViewSet):
@@ -49,13 +49,18 @@ class SubAccountViewSet(viewsets.ModelViewSet):
         """
 
         serializer = SubAccountRequestSerializer(data=request.data)
-        errors = {}
+
+        if SubAccount.objects.filter(owner=request.user).exists():
+            return fail_response(
+                errors={"sub_account": "Already created"},
+                status=status.HTTP_409_CONFLICT,
+            )
 
         if serializer.is_valid():
             validated_data = serializer.validated_data
             user = validated_data.get("owner")
-            if user != None and user == request.user:
 
+            if user != None and user == request.user:
                 payment_gateway_request_data = {
                     "incomeValue": 25000,
                     "name": user.get_full_name(),
@@ -70,14 +75,8 @@ class SubAccountViewSet(viewsets.ModelViewSet):
                     "postalCode": user.address.postal_code,
                 }
 
-                payment_gateway_response = requests.post(
-                    url=settings.ASAAS_API_URL + "accounts/",
-                    json=payment_gateway_request_data,
-                    headers={
-                        "access_token": settings.ASAAS_API_KEY,
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                    },
+                payment_gateway_response = make_asaas_api_call(
+                    payment_gateway_request_data, AsaasResourceUrl.SUB_ACCOUNT
                 )
 
                 if payment_gateway_response.status_code == 200:
