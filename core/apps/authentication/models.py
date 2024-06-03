@@ -27,6 +27,16 @@ class ProfileUser(AbstractUser):
 
     objects = ProfileUserManager()
 
+    def __eq__(self, value: object) -> bool:
+        return (
+            isinstance(value, type(self))
+            and self.email == value.email
+            and self.cpf == value.cpf
+        )
+
+    def __hash__(self) -> int:
+        return hash(tuple(self.email, self.cpf))
+
     def thumbnail(self):
         img_url = self.profile_pic.url if self.profile_pic else ""
         return mark_safe('<img src="%s" height="80px"/>' % img_url)
