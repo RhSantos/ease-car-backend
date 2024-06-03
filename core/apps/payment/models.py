@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth.hashers import make_password as make_hash
 from django.db import models
 from django.utils import timezone
@@ -60,3 +62,43 @@ class Customer(models.Model):
     def save(self, *args, **kwargs):
         self.updated_at = timezone.now()
         super(Customer, self).save(*args, **kwargs)
+
+
+class Subscription(models.Model):
+    class BillingType(models.TextChoices):
+        BOLETO = "BOLETO"
+        CREDIT_CARD = "CREDIT_CARD"
+        PIX = "PIX"
+
+    class Cycle(models.TextChoices):
+        MONTHLY = "MONTHLY"
+        YEARLY = "YEARLY"
+
+    class Status(models.TextChoices):
+        ACTIVE = "ACTIVE"
+        INACTIVE = "INACTIVE"
+        EXPIRED = "EXPIRED"
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    billing_type = models.CharField(max_length=20, choices=BillingType.choices)
+    cycle = models.CharField(max_length=20, choices=Cycle.choices)
+    value = models.DecimalField(max_digits=20, decimal_places=2)
+    next_due_date = models.DateField()
+    end_date = models.DateField()
+    description = models.CharField(max_length=100)
+    status = models.CharField(max_length=20, choices=Status.choices)
+    discount_percentage = models.DecimalField(
+        max_digits=2, decimal_places=2, default=0.0
+    )
+    fine_value = models.DecimalField(max_digits=2, decimal_places=2, default=0.0)
+    interest_value = models.DecimalField(max_digits=2, decimal_places=2, default=0.0)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Customer: {self.customer} - Status: {self.status.capitalize()}"
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super(Subscription, self).save(*args, **kwargs)
