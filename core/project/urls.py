@@ -15,7 +15,7 @@ from core.apps.booking.views import BookingViewSet
 from core.apps.brand.views import BrandViewSet
 from core.apps.car.views import CarViewSet
 from core.apps.favorite.views import FavoriteViewSet
-from core.apps.payment.views import SubAccountViewSet
+from core.apps.payment.views import CustomerViewSet, SubAccountViewSet
 from core.apps.rental.views import RentalViewSet
 from core.apps.review.views import ReviewViewSet
 
@@ -28,6 +28,7 @@ router.register("auth/refresh-token", TokenRefreshViewSet, basename="auth-token"
 router.register("auth/verify-token", TokenVerifyViewSet, basename="auth-verify")
 
 # Payment Routes
+router.register("payment/customer", CustomerViewSet, basename="payment-customer")
 router.register("payment/subaccount", SubAccountViewSet, basename="payment-subaccount")
 
 # Models Routes
