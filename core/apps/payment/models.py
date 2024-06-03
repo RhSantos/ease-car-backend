@@ -37,3 +37,26 @@ class SubAccount(models.Model):
         self.api_key = make_hash(self.api_key)
         self.updated_at = timezone.now()
         super(SubAccount, self).save(*args, **kwargs)
+
+
+class Customer(models.Model):
+    id = models.CharField(primary_key=True, max_length=30, editable=False)
+    person = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
+    is_notification_disabled = models.BooleanField(default=False)
+    observations = models.CharField(max_length=100)
+    is_deleted = models.BooleanField(default=False)
+    created_at = models.DateTimeField(default=timezone.now, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return str(self.person)
+
+    def __eq__(self, value: object) -> bool:
+        return isinstance(value, type(self)) and self.person == value.person
+
+    def __hash__(self) -> int:
+        return hash(self.person)
+
+    def save(self, *args, **kwargs):
+        self.updated_at = timezone.now()
+        super(Customer, self).save(*args, **kwargs)
