@@ -21,7 +21,7 @@ class CustomerAdmin(admin.ModelAdmin):
     read_only = parent_fields
 
 
-@admin.register(Customer)
+@admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
     all_fields = [f.name for f in Subscription._meta.fields]
     parent_fields = Subscription.get_deferred_fields(Subscription)
