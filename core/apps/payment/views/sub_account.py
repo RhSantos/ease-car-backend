@@ -83,18 +83,19 @@ class SubAccountViewSet(viewsets.ModelViewSet):
 
                     response_data = payment_gateway_response.json()
 
-                    sub_account = SubAccount(
-                        id=uuid.UUID(response_data["id"]),
-                        owner=user,
-                        income_value=validated_data.get("income_value"),
-                        income_range=response_data["incomeRange"],
-                        api_key=response_data["apiKey"],
-                        wallet_id=response_data["walletId"],
-                        account_agency=response_data["accountNumber"]["agency"],
-                        account_number=response_data["accountNumber"]["account"],
-                        account_digit=response_data["accountNumber"]["accountDigit"],
-                    )
-                    response_serializer = SubAccountResponseSerializer(sub_account)
+                    sub_account = {
+                        "id": uuid.UUID(response_data["id"]),
+                        "owner": user,
+                        "income_value": validated_data.get("income_value"),
+                        "income_range": response_data["incomeRange"],
+                        "api_key": response_data["apiKey"],
+                        "wallet_id": response_data["walletId"],
+                        "account_agency": response_data["accountNumber"]["agency"],
+                        "account_number": response_data["accountNumber"]["account"],
+                        "account_digit": response_data["accountNumber"]["accountDigit"],
+                    }
+
+                    response_serializer = SubAccountResponseSerializer(data=sub_account)
 
                     if response_serializer.is_valid():
                         response_serializer.save()
