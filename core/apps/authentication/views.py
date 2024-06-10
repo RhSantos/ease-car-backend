@@ -17,7 +17,12 @@ class RegisterViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
     serializer_class = RegisterSerializer
 
     def create(self, request):
-        data = format_multipart_form_data_field(request.data, "address")
+
+        data = (
+            format_multipart_form_data_field(request.data, "address")
+            if request.content_type == "multipart/form-data"
+            else request.data
+        )
 
         serializer = RegisterSerializer(data=data)
 
@@ -26,6 +31,7 @@ class RegisterViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
             return success_response(
                 key="user", data=serializer.data, status=status.HTTP_201_CREATED
             )
+
         return fail_response(serializer.errors)
 
 
