@@ -38,25 +38,27 @@ class LoginViewSet(viewsets.GenericViewSet, mixins.CreateModelMixin):
         if serializer.is_valid():
             email = request.data.get("email")
             password = request.data.get("password")
-            user = ProfileUser.objects.get(email=email)
 
-            if not user:
+            try:
+                user = ProfileUser.objects.get(email=email)
+
+                if user.check_password(password):
+
+                    refresh_token = RefreshToken.for_user(user)
+                    user_serializer = RegisterSerializer(user)
+
+                    data = {
+                        "user": user_serializer.data,
+                        "access-token": str(refresh_token.access_token),
+                        "refresh-token": str(refresh_token),
+                    }
+
+                    return success_response(
+                        key="auth", data=data, status=status.HTTP_201_CREATED
+                    )
+            except ProfileUser.DoesNotExist:
                 return error_response("User not found")
 
-            if user.check_password(password):
-
-                refresh_token = RefreshToken.for_user(user)
-                user_serializer = RegisterSerializer(user)
-
-                data = {
-                    "user": user_serializer.data,
-                    "access-token": str(refresh_token.access_token),
-                    "refresh-token": str(refresh_token),
-                }
-
-                return success_response(
-                    key="auth", data=data, status=status.HTTP_201_CREATED
-                )
         return fail_response(serializer.errors)
 
 
