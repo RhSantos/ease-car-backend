@@ -1,3 +1,5 @@
+from http import HTTPMethod
+
 from django.http.response import Http404
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
@@ -48,58 +50,54 @@ class CustomerViewSet(viewsets.ModelViewSet):
 
         serializer = CustomerSerializer(data=request.data)
 
-        if Customer.objects.filter(person=request.user).exists():
-            return fail_response(
-                errors={"customer": "Already created"},
-                status=status.HTTP_409_CONFLICT,
-            )
-
         if serializer.is_valid():
             validated_data = serializer.validated_data
-            user = validated_data.get("person")
+            person = validated_data.get("person")
 
-            if user != None and user == request.user:
-                payment_gateway_request_data = {
-                    "name": user.get_full_name(),
-                    "cpfCnpj": user.cpf,
-                    "email": user.email,
-                    "mobilePhone": user.mobile_phone,
-                    "address": user.address.street,
-                    "province": user.address.province,
-                    "postalCode": user.address.postal_code,
-                    "addressNumber": user.address.number,
-                    "complement": user.address.complement,
-                    "observations": validated_data.get("observations"),
-                    "notificationDisabled": validated_data.get("notification_disabled"),
-                }
-
-                payment_gateway_response = make_asaas_api_call(
-                    payment_gateway_request_data, AsaasResourceUrl.CUSTOMER
-                )
-
-                if payment_gateway_response.status_code == 200:
-
-                    response_data = payment_gateway_response.json()
-
-                    validated_data["id"] = response_data["id"]
-
-                    serializer.save()
-
-                    return success_response(key="customer", data=serializer.data)
-
-                errors = {
-                    value["code"]: value["description"]
-                    for value in payment_gateway_response.json()["errors"]
-                }
-
+            if Customer.objects.filter(person=person).exists():
                 return fail_response(
-                    errors,
-                    status=payment_gateway_response.status_code,
+                    errors={"customer": "Already created"},
+                    status=status.HTTP_409_CONFLICT,
                 )
+
+            payment_gateway_request_data = {
+                "name": person.get_full_name(),
+                "cpfCnpj": person.cpf,
+                "email": person.email,
+                "mobilePhone": person.mobile_phone,
+                "address": person.address.street,
+                "province": person.address.province,
+                "postalCode": person.address.postal_code,
+                "addressNumber": person.address.number,
+                "complement": person.address.complement,
+                "observations": validated_data.get("observations"),
+                "notificationDisabled": validated_data.get("notification_disabled"),
+            }
+
+            payment_gateway_response = make_asaas_api_call(
+                method=HTTPMethod.POST,
+                request_data=payment_gateway_request_data,
+                api_resource=AsaasResourceUrl.CUSTOMER,
+            )
+
+            if payment_gateway_response.status_code == 200:
+
+                response_data = payment_gateway_response.json()
+
+                validated_data["id"] = response_data["id"]
+
+                serializer.save()
+
+                return success_response(key="customer", data=serializer.data)
+
+            errors = {
+                value["code"]: value["description"]
+                for value in payment_gateway_response.json()["errors"]
+            }
 
             return fail_response(
-                {"user": "You are not Customer Owner"},
-                status=status.HTTP_401_UNAUTHORIZED,
+                errors,
+                status=payment_gateway_response.status_code,
             )
 
         return fail_response(serializer.errors)
