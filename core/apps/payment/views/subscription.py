@@ -1,4 +1,5 @@
 import uuid
+from http import HTTPMethod
 
 from django.http.response import Http404
 from rest_framework import viewsets
@@ -96,7 +97,9 @@ class SubscriptionViewSet(viewsets.ModelViewSet):
                     )
 
                 payment_gateway_response = make_asaas_api_call(
-                    payment_gateway_request_data, AsaasResourceUrl.SUBSCRIPTION
+                    method=HTTPMethod.POST,
+                    request_data=payment_gateway_request_data,
+                    api_resource=AsaasResourceUrl.SUBSCRIPTION,
                 )
 
                 if payment_gateway_response.status_code == 200:
