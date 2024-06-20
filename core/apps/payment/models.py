@@ -46,7 +46,6 @@ class Customer(models.Model):
     person = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     is_notification_disabled = models.BooleanField(default=False)
     observations = models.CharField(max_length=100)
-    is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
 
