@@ -3,6 +3,8 @@ from enum import Enum
 
 
 class AsaasResourceUrl(Enum):
+    CUSTOMER = "customers/"
+    SUBSCRIPTION = "subscriptions/"
     SUB_ACCOUNT = "accounts/"
 
     def __str__(self) -> str:
